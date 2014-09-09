@@ -1,0 +1,6 @@
+## --jars 指定依赖的jar文件，ilib 包含依赖的jar包
+         mysql-connector-java-5.1.17.jar
+         sparkwp-1.0.0.jar
+## --class 指定要执行的类
+
+bin/spark-submit --jars ilib/*.jar --class chap.HiveQL
