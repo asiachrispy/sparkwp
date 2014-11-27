@@ -18,6 +18,9 @@ object WordCount {
     val counts = words.map((_, 1)).reduceByKey(_ + _) // map阶段单词统计，reduce阶段单词汇总
     counts.saveAsTextFile(args(2))
   }
+
 }
+
+// sc.parallelize(List("584492 1 质量管理经理","584512 2 销售经理")).map{ line =>line.split(" ")(2) }.collect()
 // 最简单的业务代码可以使用一行完成
 // sc.textFile(args(1)).flatMap(_.split(" ")).map((_, 1)).reduceByKey(_ + _).saveAsTextFile(args(2))

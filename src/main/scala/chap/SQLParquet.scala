@@ -22,6 +22,5 @@ object SQLParquet {
     parquetFile.registerAsTable("parquetFile")
     val teenagers = sql("SELECT name FROM parquetFile WHERE age >= 10 AND age <= 20")
     teenagers.collect().foreach(println)
-
   }
 }

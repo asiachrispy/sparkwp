@@ -3,12 +3,11 @@ package chap
 import org.apache.spark._
 import org.apache.spark.sql.SQLContext
 
-//bin/spark-submit --jars ilib/*.jar --class chap.HiveQL
 object SQLMemo {
 
   case class Person(name: String, age: Int)
 
-  def main(args: Array[String]) {//spark://name1:7077
+  def main(args: Array[String]) {
     val sc = new SparkContext("local", "HiveQL", System.getenv("SPARK_HOME"))
     val sqlContext = new SQLContext(sc)
     import sqlContext.createSchemaRDD

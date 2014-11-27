@@ -1,0 +1,52 @@
+// parallel_cf
+//   (c) 2011-2013 Paul Asmuth <paul@paulasmuth.com>
+//
+// Licensed under the MIT License (the "License"); you may not use this
+// file except in compliance with the License. You may obtain a copy of
+// the License at: http://opensource.org/licenses/MIT
+
+package ml
+
+import java.util.concurrent._
+
+import scala.io._
+
+class CSVReader[T <: Any](next: (Map[Symbol, Int] => T)){
+
+  var num_threads = Runtime.getRuntime().availableProcessors()
+
+  def read(file_path: String) : Unit = {
+    val src = Source.fromFile(file_path)
+    var hdl : List[Symbol] = null
+
+    val run = Executors.newFixedThreadPool(num_threads)
+
+    (src.getLines().zipWithIndex foreach ((l: (String, Int)) => {
+
+      if (l._2 == 0) 
+        hdl = parse_line(l._1) map (Symbol(_))
+
+      else if (hdl != null)
+        run.execute(new Runnable{ def run = {
+          next(parse_line_with_headers(l._1, hdl))
+        }})
+
+    }))
+
+    src.close()
+
+    run.shutdown
+    run.awaitTermination(Math.MAX_LONG, TimeUnit.SECONDS)
+  }
+
+
+  private def parse_line(line: String) : List[String] =
+    line.split(",").toList map (_.replaceAll("^\"(.*)\"$", "$1")) // FIXPAUL HACK!!! :)
+
+
+  private def parse_line_with_headers(line: String, hdl: List[Symbol]) : Map[Symbol, Int] =
+    Map((hdl.zip(parse_line(line)) map (
+      (l: (Symbol, String)) => (l._1, Integer.parseInt(l._2))
+    )).toArray: _*)
+
+}
