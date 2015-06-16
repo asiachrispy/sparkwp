@@ -1,0 +1,27 @@
+
+1. 
+ssh-keygen -t rsa -C "asiachrispy@gmail.com"
+之后会要求确认路径和输入密码，我们这使用默认的一路回车就行。
+
+2.
+成功的话会在~/下生成.ssh文件夹，进去，打开id_rsa.pub，复制里面的key。
+
+3.
+回到github，进入Account Settings，左边选择SSH Keys，Add SSH Key,title:mt-chrispy-mac，粘贴key。
+
+4.
+ssh -T git@github.com 
+验证是否成功
+
+5.
+git config --global user.name "chrispy"
+git config --global user.email asiachrispy@gmail.com
+
+6. 
+git clone git@github.com:asiachrispy/sparkwp.git
+
+7.
+cat git.install > readme.txt
+git add readme.txt
+git commit -m "new add readme.txt"
+git push
