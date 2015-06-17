@@ -28,3 +28,7 @@ git push
 
 9.
 git branch --merged
+8.
+git pull
+git branch 
+git branch test
