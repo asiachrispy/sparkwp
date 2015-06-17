@@ -25,3 +25,9 @@ cat git.install > readme.txt
 git add readme.txt
 git commit -m "new add readme.txt"
 git push
+
+8.
+git pull
+git branch 
+git branch test
+
